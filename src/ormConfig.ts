@@ -10,5 +10,5 @@ export const ormOptions: TypeOrmModuleOptions = {
     password: "my_1ROOT",
     database: "nestjs",
     entities: [TodoEntity, UserEntity],
-    synchronize: true
+    synchronize: false
 }

@@ -5,14 +5,15 @@ import { UserEntity } from 'src/Entities/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt  from 'bcryptjs';
 import { UserLoginDto } from 'src/DTO/userLogin.dto';
-import { JwtService } from '@nestjs/jwt';
+// import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UserService {
-    constructor(@InjectRepository(UserEntity) private repo: Repository<UserEntity>, private jwt: JwtService) {}
+    constructor(@InjectRepository(UserEntity) private repo: Repository<UserEntity>, /*private jwt: JwtService*/) {}
 
     async registerUser(registerDto: RegisterUserDto) {
         const {fullName, userName, password} = registerDto;
+        console.log(password)
         const hashed  = await bcrypt.hash(password, 12);
         const salt = await bcrypt.getSalt(hashed);
 
@@ -51,7 +52,7 @@ export class UserService {
     
     // }
 
-    async loginUser(userLoginDto: UserLoginDto) {
+    /*async loginUser(userLoginDto: UserLoginDto) {
         const {userName, password} = userLoginDto
 
         const user = await this.repo.findOneBy({userName});
@@ -68,5 +69,9 @@ export class UserService {
         }else{
             throw new UnauthorizedException("Invalid Credential");
         }
+    } */
+
+    async findOneBy(userName: string): Promise<UserEntity| undefined> {
+        return await this.repo.findOneBy({userName})
     }
 }

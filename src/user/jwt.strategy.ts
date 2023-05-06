@@ -5,7 +5,7 @@ import { ExtractJwt, Strategy } from "passport-jwt";
 import { UserEntity } from "src/Entities/user.entity";
 import { Repository } from "typeorm";
 
-export class JwtCustomStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends PassportStrategy(Strategy) {
 
     constructor(@InjectRepository(UserEntity) private repo: Repository<UserEntity>) {
         super({
@@ -14,14 +14,10 @@ export class JwtCustomStrategy extends PassportStrategy(Strategy) {
         });
     }
 
-    async validate(payload: {userName: string, password: string}) {
-        const {userName, password} = payload;
-
-        const user = await this.repo.findOneBy({userName,password});
-
-        if(!user) {
-            throw new UnauthorizedException("You are not an authorized");
+    async validate(payload) {
+        return {
+            id: payload.sub,
+            userName: payload.userName
         }
-        return user;
     }
 }

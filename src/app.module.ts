@@ -5,10 +5,12 @@ import { TodoModule } from './todo/todo.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ormOptions } from './ormConfig';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
+import { AuthService } from './auth/auth.service';
 
 @Module({
-  imports: [TodoModule,TypeOrmModule.forRoot(ormOptions), UserModule],
+  imports: [TodoModule,TypeOrmModule.forRoot(ormOptions), UserModule, AuthModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService]
 })
 export class AppModule {}

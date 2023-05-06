@@ -6,9 +6,10 @@ import { TodoStatusValidationPipe } from 'src/pipes/TodoStatusValidation.pipe';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from 'src/user/user.decorator';
 import { UserEntity } from 'src/Entities/user.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('todos')
-@UseGuards(AuthGuard())
+@UseGuards(JwtAuthGuard)
 export class TodoController {
 
     constructor(private todoService: TodoService) {}
